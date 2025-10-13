@@ -1,13 +1,14 @@
 package com.simoonsong.knoxclone.service;
 
-import com.simoonsong.knoxclone.entity.Device;
+import com.simoonsong.knoxclone.dto.device.DeviceDto;
+import com.simoonsong.knoxclone.dto.device.RegisterDeviceRequest;
 
 import java.util.List;
 
 public interface DeviceService {
-    List<Device> findAllDevices();
-    Device registerDevice(Device device);
-    Device findDeviceById(Long id);
+    List<DeviceDto> findAllDevices();
+    DeviceDto registerDevice(RegisterDeviceRequest device);
+    DeviceDto findDeviceById(Long id);
     void deleteDeviceById(Long id);
-    Device findDeviceByDeviceId(String deviceId);
+    DeviceDto findDeviceByDeviceId(String deviceId);
 }
