@@ -1,46 +1,52 @@
 package com.simoonsong.knoxclone.controller;
 
-import com.simoonsong.knoxclone.dto.device.DeviceDto;
+import com.simoonsong.knoxclone.dto.device.DeviceResponse;
+import com.simoonsong.knoxclone.dto.device.DeviceStatsResponse;
 import com.simoonsong.knoxclone.dto.device.RegisterDeviceRequest;
-import com.simoonsong.knoxclone.mapper.DeviceMapper;
 import com.simoonsong.knoxclone.service.DeviceService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-import com.simoonsong.knoxclone.entity.Device;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/devices")
+@RequestMapping("/api/v1/devices")
+@RequiredArgsConstructor
 public class DeviceController {
-    @Autowired
-    private DeviceService deviceService;
+    private final DeviceService deviceService;
 
     @GetMapping
-    public List<DeviceDto> getAllDevices() {
-        return deviceService.findAllDevices();
+    public ResponseEntity<List<DeviceResponse>> getAllDevices() {
+        return ResponseEntity.ok(deviceService.findAllDevices());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DeviceDto registerDevice(@RequestBody RegisterDeviceRequest request) {
-        return deviceService.registerDevice(request);
+    public ResponseEntity<DeviceResponse> registerDevice(@RequestBody RegisterDeviceRequest request) {
+        return ResponseEntity.ok(deviceService.registerDevice(request));
     }
 
     @GetMapping("/{id}")
-    public DeviceDto getDeviceById(@PathVariable Long id) {
-        return deviceService.findDeviceById(id);
+    public ResponseEntity<DeviceResponse> getDeviceById(@PathVariable Long id) {
+        return ResponseEntity.ok(deviceService.findDeviceById(id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDeviceById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDeviceById(@PathVariable Long id) {
         deviceService.deleteDeviceById(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/deviceId/{deviceId}")
-    public DeviceDto getDeviceByDeviceId(@PathVariable String deviceId) {
-        return deviceService.findDeviceByDeviceId(deviceId);
+    public ResponseEntity<DeviceResponse> getDeviceByDeviceId(@PathVariable String deviceId) {
+        return ResponseEntity.ok(deviceService.findDeviceByDeviceId(deviceId));
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<DeviceStatsResponse> getDeviceStats() {
+        return ResponseEntity.ok(deviceService.getDeviceStats());
     }
 }

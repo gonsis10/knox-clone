@@ -1,25 +1,23 @@
 package com.simoonsong.knoxclone.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Table(name = "devices")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Device {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String deviceId;
+    @Column(nullable = false)
     private String deviceModel;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DeviceStatus status;
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getDeviceId() { return deviceId; }
-    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
-
-    public String getDeviceModel() { return deviceModel; }
-    public void setDeviceModel(String deviceModel) { this.deviceModel = deviceModel; }
-
-    public DeviceStatus getStatus() { return status; }
-    public void setStatus(DeviceStatus status) { this.status = status; }
 }
