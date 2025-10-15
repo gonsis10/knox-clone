@@ -26,7 +26,7 @@ public class DeviceService {
         Device device = Device.builder()
                 .deviceId(request.getDeviceId())
                 .deviceModel(request.getDeviceModel())
-                .status(DeviceStatus.ACTIVE)
+                .status(DeviceStatus.INACTIVE)
                 .build();
 
         Device savedDevice = deviceRepository.save(device);
@@ -51,22 +51,22 @@ public class DeviceService {
     public DeviceStatsResponse getDeviceStats() {
         List<Device> allDevices = deviceRepository.findAll();
 
-        int activeDevices = (int) allDevices.stream()
-                .filter(device -> DeviceStatus.ACTIVE.equals(device.getStatus()))
+        int retailDevices = (int) allDevices.stream()
+                .filter(device -> DeviceStatus.RETAIL.equals(device.getStatus()))
+                .count();
+
+        int scannerDevices = (int) allDevices.stream()
+                .filter(device -> DeviceStatus.SCANNER.equals(device.getStatus()))
                 .count();
 
         int inactiveDevices = (int) allDevices.stream()
                 .filter(device -> DeviceStatus.INACTIVE.equals(device.getStatus()))
                 .count();
 
-        int lockedDevices = (int) allDevices.stream()
-                .filter(device -> DeviceStatus.LOCKED.equals(device.getStatus()))
-                .count();
-
         return DeviceStatsResponse.builder()
-                .activeDevices(activeDevices)
+                .retailDevices(retailDevices)
+                .scannerDevices(scannerDevices)
                 .inactiveDevices(inactiveDevices)
-                .lockedDevices(lockedDevices)
                 .totalDevices(allDevices.size())
                 .build();
     }

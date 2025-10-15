@@ -1,7 +1,7 @@
 package com.simoonsong.knoxclone.entity;
 
 public enum DeviceStatus {
-    ACTIVE,
+    RETAIL,
+    SCANNER,
     INACTIVE,
-    LOCKED,
 }

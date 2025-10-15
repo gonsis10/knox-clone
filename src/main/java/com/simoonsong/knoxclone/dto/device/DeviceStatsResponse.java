@@ -7,8 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeviceStatsResponse {
-    private Integer activeDevices;
+    private Integer retailDevices;
+    private Integer scannerDevices;
     private Integer inactiveDevices;
-    private Integer lockedDevices;
     private Integer totalDevices;
 }
