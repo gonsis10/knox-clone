@@ -3,6 +3,7 @@ package com.simoonsong.knoxclone.controller;
 import com.simoonsong.knoxclone.dto.device.DeviceResponse;
 import com.simoonsong.knoxclone.dto.device.DeviceStatsResponse;
 import com.simoonsong.knoxclone.dto.device.RegisterDeviceRequest;
+import com.simoonsong.knoxclone.entity.DeviceStatus;
 import com.simoonsong.knoxclone.service.DeviceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,20 @@ public class DeviceController {
     @GetMapping("/stats")
     public ResponseEntity<DeviceStatsResponse> getDeviceStats() {
         return ResponseEntity.ok(deviceService.getDeviceStats());
+    }
+
+    @PatchMapping("/{id}/retail")
+    public ResponseEntity<DeviceResponse> setRetail(@PathVariable Long id) {
+        return ResponseEntity.ok(deviceService.updateDeviceStatus(id, DeviceStatus.RETAIL));
+    }
+
+    @PatchMapping("/{id}/scanner")
+    public ResponseEntity<DeviceResponse> setScanner(@PathVariable Long id) {
+        return ResponseEntity.ok(deviceService.updateDeviceStatus(id, DeviceStatus.SCANNER));
+    }
+
+    @PatchMapping("/{id}/inactive")
+    public ResponseEntity<DeviceResponse> setInactive(@PathVariable Long id) {
+        return ResponseEntity.ok(deviceService.updateDeviceStatus(id, DeviceStatus.INACTIVE));
     }
 }

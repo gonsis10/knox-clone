@@ -71,6 +71,14 @@ public class DeviceService {
                 .build();
     }
 
+    public DeviceResponse updateDeviceStatus(Long id, DeviceStatus deviceStatus) {
+        Device device = deviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Device not found with id: " + id));
+        device.setStatus(deviceStatus);
+        Device updatedDevice = deviceRepository.save(device);
+        return convertToResponse(updatedDevice);
+    }
+
     private DeviceResponse convertToResponse(Device device) {
         return DeviceResponse.builder()
                 .id(device.getId())
